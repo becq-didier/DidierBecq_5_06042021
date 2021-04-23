@@ -1,0 +1,78 @@
+    @import 'topBtn';
+    @import 'effect3d';
+    @import 'btnIcremt';
+    a {
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    body {
+        background-image: linear-gradient(#e5890854, #8f5bfe36), url("images/bgVintage.png");
+    }
+    
+    .banner {
+        background-color: #F3E9F1;
+    }
+    
+    #cart {
+        overflow: hidden;
+        box-shadow: 5px 5px 10px grey;
+    }
+    
+    #imageBanner {
+        max-width: 295px;
+    }
+    
+    main {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    #menuPanier {
+        color: white;
+        width: 0;
+        height: 1.5rem;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+    }
+    
+    button {
+        // width: 250px;
+        //width: 100%;
+        box-shadow: 2px 2px 5px black;
+        &:hover {
+            box-shadow: none;
+        }
+    }
+    
+    hr:not([size]) {
+        height: 4px;
+    }
+    
+    hr {
+        background-color: cadetblue;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .panier__container__liste {
+        #ref {
+            font-size: 0.7rem;
+        }
+        &__items__item span:nth-child(even) {
+            color: rgb(10, 40, 140)
+        }
+        &__items__item span:nth-child(odd) {
+            color: rgb(111, 93, 55)
+        }
+    }
+    
+    @media (max-width:700px) {
+        .banner {
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+    }

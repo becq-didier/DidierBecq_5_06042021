@@ -1,0 +1,38 @@
+/*effet 3d*/
+
+.box {
+    background-color: transparent;
+    min-width: 355px;
+    height: 350px;
+    perspective: 1000px;
+    margin: 20px;
+    &__inner {
+        position: relative;
+        width: 355px;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.5s;
+        transform-style: preserve-3d;
+        &__front {
+            background-color: #CF9B83;
+            color: #111111;
+        }
+        &__back {
+            background-color: #A366C5;
+            color: #eeeeee;
+            transform: rotateY(180deg);
+        }
+        &__front,
+        &__back {
+            position: absolute;
+            width: 355px;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 5%;
+        }
+    }
+    &:hover &__inner {
+        transform: rotateY(180deg);
+    }
+}

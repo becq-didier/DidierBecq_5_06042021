@@ -1,0 +1,189 @@
+@charset "UTF-8";
+/*Bouton pour remonter tout en haut*/
+#scroll_to_top {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  bottom: 50px;
+  right: 25px;
+}
+
+#scroll_to_top img {
+  width: 2rem;
+}
+
+/*effet 3d*/
+.box {
+  background-color: transparent;
+  min-width: 355px;
+  height: 350px;
+  perspective: 1000px;
+  margin: 20px;
+}
+.box__inner {
+  position: relative;
+  width: 355px;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.box__inner__front {
+  background-color: #CF9B83;
+  color: #111111;
+}
+.box__inner__back {
+  background-color: #A366C5;
+  color: #eeeeee;
+  transform: rotateY(180deg);
+}
+.box__inner__front, .box__inner__back {
+  position: absolute;
+  width: 355px;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 5%;
+}
+.box:hover .box__inner {
+  transform: rotateY(180deg);
+}
+
+/*  Bouton incrémentation  */
+.product__img {
+  width: 100%;
+}
+.product__info {
+  background: #575757;
+  color: #fff;
+}
+.product__info__option {
+  display: flex;
+}
+.product__info__option #qtyminus {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  border-radius: 50% 0 0 50%;
+  -webkit-border-radius: 50% 0 0 50%;
+  -moz-border-radius: 50% 0 0 50%;
+  -ms-border-radius: 50% 0 0 50%;
+  -o-border-radius: 50% 0 0 50%;
+}
+.product__info__option #qtyplus {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  border-radius: 0 50% 50% 0;
+  -webkit-border-radius: 0 50% 50% 0;
+  -moz-border-radius: 0 50% 50% 0;
+  -ms-border-radius: 0 50% 50% 0;
+  -o-border-radius: 0 50% 50% 0;
+}
+.product__info__option #qtyminus,
+.product__info__option #qtyplus {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  color: black;
+  font-size: 1rem;
+  background: #F3E9F1;
+  border: none;
+  line-height: 0;
+}
+.product__info__option #qty {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  text-align: center;
+  border: none;
+  /*faire disparaitre le fleches dans input number*/
+  /* Firefox */
+  /* Chrome */
+  /* Opéra*/
+}
+.product__info__option #qty[type=number] {
+  -moz-appearance: textfield;
+}
+.product__info__option #qty::-webkit-inner-spin-button, .product__info__option #qty::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.product__info__option #qty::-o-inner-spin-button, .product__info__option #qty::-o-outer-spin-button {
+  -o-appearance: none;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body {
+  background-image: linear-gradient(#e5890854, #8f5bfe36), url("images/bgVintage.png");
+}
+
+.banner {
+  background-color: #F3E9F1;
+}
+
+#cart {
+  overflow: hidden;
+  box-shadow: 5px 5px 10px grey;
+}
+
+#imageBanner {
+  max-width: 295px;
+}
+
+main {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+#menuPanier {
+  color: white;
+  width: 0;
+  height: 1.5rem;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+button {
+  box-shadow: 2px 2px 5px black;
+}
+button:hover {
+  box-shadow: none;
+}
+
+hr:not([size]) {
+  height: 4px;
+}
+
+hr {
+  background-color: cadetblue;
+  margin: 0;
+  padding: 0;
+}
+
+.panier__container__liste #ref {
+  font-size: 0.7rem;
+}
+.panier__container__liste__items__item span:nth-child(even) {
+  color: #0a288c;
+}
+.panier__container__liste__items__item span:nth-child(odd) {
+  color: #6f5d37;
+}
+
+@media (max-width: 700px) {
+  .banner {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
