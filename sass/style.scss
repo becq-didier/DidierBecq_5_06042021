@@ -7,7 +7,7 @@
     }
     
     body {
-        background-image: linear-gradient(#e5890854, #8f5bfe36), url("images/bgVintage.png");
+        background-image: linear-gradient(#e5890854, #8f5bfe36), url("../images/bgVintage.png");
     }
     
     .banner {
@@ -39,8 +39,6 @@
     }
     
     button {
-        // width: 250px;
-        //width: 100%;
         box-shadow: 2px 2px 5px black;
         &:hover {
             box-shadow: none;
@@ -66,6 +64,39 @@
         }
         &__items__item span:nth-child(odd) {
             color: rgb(111, 93, 55)
+        }
+    }
+    
+    .nav-item,
+    .navbar-brand {
+        &:after {
+            content: '';
+            display: block;
+            margin: auto;
+            height: 1px;
+            width: 0;
+            background: transparent;
+            transition: width .5s ease, background-color .5s ease;
+            -webkit-transition: width .5s ease, background-color .5s ease;
+            -moz-transition: width .5s ease, background-color .5s ease;
+            -ms-transition: width .5s ease, background-color .5s ease;
+            -o-transition: width .5s ease, background-color .5s ease;
+        }
+        &:hover:after {
+            width: 90%;
+            background: rgb(118, 64, 134);
+        }
+        &:hover {
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -ms-border-radius: 10px;
+            -o-border-radius: 10px;
+            transition: background-color .5s ease;
+            -webkit-transition: background-color .5s ease;
+            -moz-transition: background-color .5s ease;
+            -ms-transition: background-color .5s ease;
+            -o-transition: background-color .5s ease;
         }
     }
     

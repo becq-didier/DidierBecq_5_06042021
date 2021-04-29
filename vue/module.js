@@ -1,7 +1,3 @@
-/*********************************************************************************** */
-//Création de la variable Global prix total
-var urlApi = "http://localhost:3000/api/cameras";
-
 /********************************************************************************* */
 // fetch appel au serveur en Get ou Post
 function fetchRequest(methode, url, data) {
@@ -11,7 +7,7 @@ function fetchRequest(methode, url, data) {
         body: JSON.stringify(data), // Coordinate the body type with 'Content-Type'
         headers: new Headers({ "Content-Type": "application/json" }),
     }).then((response) => response.json());
-}
+};
 
 /********************************************************************************** */
 // affiche le nombre d'articles a côté du menu panier
@@ -34,16 +30,15 @@ function numBasket() {
         element.style.backgroundColor = "none";
 
     }
-}
+};
 
 /*********************************************************************************** */
 // supprime un élément du panier
 function removeItemOnce(value) {
     let article = JSON.parse(localStorage.getItem("panier"));
-    //  supprime 1 élément a partir de value
+    //  supprime 1 élément a partir égale value (Numero de ligne)
     article.splice(value, 1);
     localStorage.setItem("panier", JSON.stringify(article));
-    console.log(localStorage.getItem("panier")[0]);
 
     if (localStorage.getItem("panier") == "[]") {
         localStorage.removeItem("panier");
@@ -51,7 +46,7 @@ function removeItemOnce(value) {
     }
     displayPanier(JSON.stringify(article));
     return false;
-}
+};
 
 /*********************************************************************************** */
 // insert les information du produit dans le localStorage du panier
@@ -68,9 +63,7 @@ function addStorage(refMag) {
 
     if (localStorage.getItem("panier") === null) {
         localStorage.setItem("panier", JSON.stringify(articles));
-        //articles.push(JSON.parse(localStorage.getItem("panier")));
     }
-    //console.log(url);
     // Analyser les données sérialisées dans un tableau d'objets
     articles = JSON.parse(localStorage.getItem("panier"));
     // Appuyez sur les nouvelles données (que ce soit un objet ou autre chose) sur le tableau
@@ -94,7 +87,7 @@ function addStorage(refMag) {
     // appel Modal - Boite de dialogue pour demander à continuer ses achats ou partir vers le panier
 
     showModal("Confirmez", "Désirez vous aller au panier", "oui", "non", () => displayPanier(localStorage.getItem("panier")));
-}
+};
 
 /*********************************************************************************** */
 // controle les bouton incrément dans page produit
@@ -103,7 +96,7 @@ function btnIncrement() {
     var input = document.querySelector("#qty");
     var btnminus = document.querySelector("#qtyminus");
     var btnplus = document.querySelector("#qtyplus");
-    // console.log(input, btnminus, btnplus);
+
     if (
         input !== undefined &&
         btnminus !== undefined &&
@@ -138,5 +131,89 @@ function btnIncrement() {
 
         btnminus.addEventListener("click", qtyminus);
         btnplus.addEventListener("click", qtyplus);
+    }
+};
+/**
+ * 
+ * @param {string} title 
+ * @param {string} description content of modal body 
+ * @param {string} yesBtnLabel label of Yes button 
+ * @param {string} noBtnLabel label of No button 
+ * @param {function } callback callback function  when click Yes button
+ */
+var modalWrap = null;
+
+const showModal = (title, description, yesBtnLabel = 'Yes', noBtnLabel = 'Cancel', callback) => {
+    if (modalWrap !== null) {
+        modalWrap.remove();
+    }
+    let classBtn = '';
+    if (yesBtnLabel === null) { classBtn = "visually-hidden"; }
+    modalWrap = document.createElement('div');
+    modalWrap.innerHTML = `
+    <div class="modal fade" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>${description}</p>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${noBtnLabel}</button>
+            <button type="button" class="${classBtn} btn btn-success modal-success-btn" aria- data-bs-dismiss="modal">${yesBtnLabel}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+    modalWrap.querySelector('.modal-success-btn').onclick = callback;
+
+    document.body.append(modalWrap);
+
+    var modal = new bootstrap.Modal(modalWrap.querySelector('.modal'));
+    modal.show();
+};
+
+function checkSaisie() {
+    let msg = {
+        firstName: [
+            "Veuillez entrer votre nom",
+            "Ce champ doit comporter des lettres uniquement, au minimum 4",
+        ],
+        lastName: [
+            "Veuillez entrer votre prénom",
+            "Ce champ doit comporter des lettres uniquement, au minimum 4",
+        ],
+        address: [
+            "Veuillez entrer votre adresse",
+            "Ce champ doit comporter au minimum 10 caractère",
+        ],
+        city: [
+            "Veuillez entrer votre commune",
+            "Ce champ doit comporter des lettres uniquement",
+        ],
+        mail: [
+            "Veuillez entrer votre e-mail",
+            "Ce champ est sous la forme: xxx.xxx@xxx.xxx",
+        ],
+    };
+    for (num in msg) {
+        let champ = document.getElementById(num);
+        let message1 = msg[num][0];
+        let message2 = msg[num][1];
+        champ.oninvalid = function(e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                if (e.target.value.length == 0) {
+                    e.target.setCustomValidity(message1);
+                } else {
+                    e.target.setCustomValidity(message2);
+                }
+            }
+        };
     }
 }

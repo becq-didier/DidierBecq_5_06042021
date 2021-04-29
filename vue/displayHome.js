@@ -1,3 +1,21 @@
+//Création de la variable Global prix total(teddies,cameras,furniture)
+var urlApi = "http://localhost:3000/api/cameras";
+//Appel la page Home au chargement
+document.addEventListener("DOMContentLoaded", function() {
+    displayHome(`${urlApi}`);
+});
+
+//Lien menu produits
+document
+    .getElementById("navProduct")
+    .setAttribute("onclick", `displayHome('${urlApi}')`);
+
+//Lien menu panier
+document
+    .getElementById("navPanier")
+    .setAttribute("onclick", 'displayPanier(localStorage.getItem("panier"))');
+
+/*********************************************************************************** */
 /**
  *
  * @param {string} title Page d'accueil
@@ -5,7 +23,7 @@
  * @param {string} URL http://localhost:3000/api/cameras
  */
 function displayHome(url) {
-    fetchRequest('GET', url)
+    fetchRequest("GET", url)
         .then((data) => {
             // nom de la propriere de la table d'option (colors,lenses varnish)
             let options = Object.keys(data[0])[0];
@@ -18,15 +36,17 @@ function displayHome(url) {
                      <article class='box col d-flex  justify-content-center'>
                         <div class='box__inner'>
                             <div id='cart' class='box__inner__front d-flex align-items-center justify-content-center'>
-                                <img class='card-img-top' id='ephotoDuProduit' src=${data[val].imageUrl}><br>
+                                <img class='card-img-top' id='ephotoDuProduit' src=${
+                                  data[val].imageUrl
+                                }><br>
                             </div>
                             <div class='box__inner__back card d-flex flex-column align-items-center justify-content-center'>
                                 <div class='card-body'>
                                     <div class='card-title'>
-                                        <p class='text-muted'>ref:${data[val]._id}</p>
-                                        <p class='h3' >${
-                                          data[val].name
-                                        }</p>
+                                        <!--p class='text-muted'>ref:${
+                                          data[val]._id
+                                        }</p-->
+                                        <p class='h3' >${data[val].name}</p>
                                     </div><hr>
                                     <div class='card-text row'>
                                         <p class='h5'>${data[val].description}</p>
@@ -34,7 +54,7 @@ function displayHome(url) {
                                     </div><hr>
                                     <p class='h3'>${data[val].price / 100}€</p>
                                     <div class=''>
-                                        <button class='btn btn-dark' onclick='displayProduct("${url}/${data[val]._id}")' type='button' class='btn btn-secondary'>Voir produit</button>
+                                        <button id="btnProduct" class='btn btn-dark' onclick='displayProduct("${url}/${data[val]._id}")' type='button' class='btn btn-secondary'>Voir la fiche du produit</button>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +62,8 @@ function displayHome(url) {
                      </article>
                      `;
                 for (const op in data[val][options]) {
-                    document.getElementById("options" + val).innerHTML += "- " + data[val][options][op] + "<br>";
+                    document.getElementById("options" + val).innerHTML +=
+                        "- " + data[val][options][op] + "<br>";
                 }
             }
 

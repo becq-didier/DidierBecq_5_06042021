@@ -17,12 +17,18 @@ function displayProduct(url) {
             container.innerHTML = `
                      <article class='product d-flex justify-content-center flex-column flex-lg-row'>
                             <div class='product__img d-flex align-items-center justify-content-center'>
-                                <img class='card-img-top' id='photoDuProduit' src=${data.imageUrl}><br>
+                                <img class='card-img-top' id='photoDuProduit' src=${
+                                  data.imageUrl
+                                }><br>
                             </div>
                             <div class='product__info d-flex  align-items-center justify-content-center  flex-column flex-lg-row'>
                                 <div class='product__info__description col-6 p-2'>
-                                    name: <span id='name'>${data.name}</span><br>
-                                    prix: <span id='price'>${data.price / 100}</span>€<br>
+                                    name: <span id='name'>${
+                                      data.name
+                                    }</span><br>
+                                    prix: <span id='price'>${
+                                      data.price / 100
+                                    }</span>€<br>
                                     description:${data.description}<br>
                                 </div>
                                 <div class='product__info__option d-flex flex-column col-6 p-2'>
@@ -37,8 +43,8 @@ function displayProduct(url) {
                                     </div>
                                     <!-- Button trigger modal -->
                                     <div class='container'>
-                                        <button type='button' onclick='addStorage(${JSON.stringify(data._id)});' id='btnAdd' class='product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
-                                        <button type='button' class='product__info__option__home btn btn-dark m-2' onclick='displayHome("http://localhost:3000/api/cameras");' >Retour aux produits</button>
+                                        <button type='button' onclick='addStorage(${JSON.stringify(data._id)});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
+                                        <button type='button' class='w-100 product__info__option__home btn btn-dark m-2' onclick='displayHome(${urlApi});' >Retour aux produits</button>
                                     </div>
                                 </div>
                     </article>
@@ -53,11 +59,7 @@ function displayProduct(url) {
             // Fonction des boutons plus et moins pour le nombre d'article.
             btnIncrement();
 
-
-
-
-
         }) // Résultat de l'appel `dataonse.json ()`
         .catch((error) => console.error(error));
 
-}
+};

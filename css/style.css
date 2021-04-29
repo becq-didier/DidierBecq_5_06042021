@@ -120,7 +120,7 @@ a {
 }
 
 body {
-  background-image: linear-gradient(#e5890854, #8f5bfe36), url("images/bgVintage.png");
+  background-image: linear-gradient(#e5890854, #8f5bfe36), url("../images/bgVintage.png");
 }
 
 .banner {
@@ -176,6 +176,39 @@ hr {
 }
 .panier__container__liste__items__item span:nth-child(odd) {
   color: #6f5d37;
+}
+
+.nav-item:after,
+.navbar-brand:after {
+  content: "";
+  display: block;
+  margin: auto;
+  height: 1px;
+  width: 0;
+  background: transparent;
+  transition: width 0.5s ease, background-color 0.5s ease;
+  -webkit-transition: width 0.5s ease, background-color 0.5s ease;
+  -moz-transition: width 0.5s ease, background-color 0.5s ease;
+  -ms-transition: width 0.5s ease, background-color 0.5s ease;
+  -o-transition: width 0.5s ease, background-color 0.5s ease;
+}
+.nav-item:hover:after,
+.navbar-brand:hover:after {
+  width: 90%;
+  background: #764086;
+}
+.nav-item:hover,
+.navbar-brand:hover {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  transition: background-color 0.5s ease;
+  -webkit-transition: background-color 0.5s ease;
+  -moz-transition: background-color 0.5s ease;
+  -ms-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
 }
 
 @media (max-width: 700px) {

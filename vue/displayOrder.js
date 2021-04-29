@@ -5,8 +5,8 @@ function displayOrder() {
     let address = document.getElementById("address").value;
     let city = document.getElementById("city").value;
     let email = document.getElementById("mail").value;
-    console.log("eee");
-    console.log(priceTotal);
+
+
     let contact = new Object();
     contact.firstName = firstName;
     contact.lastName = lastName;
@@ -40,7 +40,7 @@ function displayOrder() {
                     <p>Votre commande sera expédiée sous 24 heures</p>
                     <p>N° de commande: ${data.orderId}</p>
                     <p>Montant total: ${parseFloat(priceTotal).toFixed(2)}€</p>
-                    <button  type='button' class='btn btn-dark m-3' onclick='displayHome("http://localhost:3000/api/cameras");'>Retour au produits</button>
+                    <button  type='button' class='btn btn-dark m-3' onclick='displayHome("${urlApi}");'>Retour au produits</button>
                 </div>
                 `;
             localStorage.removeItem("panier");
@@ -49,4 +49,4 @@ function displayOrder() {
         .catch((error) => console.error(error));
 
 
-}
+};
