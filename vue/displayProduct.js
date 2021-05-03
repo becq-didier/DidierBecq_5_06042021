@@ -44,7 +44,7 @@ function displayProduct(url) {
                                     <!-- Button trigger modal -->
                                     <div class='container'>
                                         <button type='button' onclick='addStorage(${JSON.stringify(data._id)});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
-                                        <button type='button' class='w-100 product__info__option__home btn btn-dark m-2' onclick='displayHome(${urlApi});' >Retour aux produits</button>
+                                        <button type='button' class='w-100 product__info__option__home btn btn-dark m-2' onclick='displayHome("${urlApi}");' >Retour aux produits</button>
                                     </div>
                                 </div>
                     </article>
