@@ -1,12 +1,16 @@
+// Affiche la page commande
 function displayOrder() {
+    //récupére la somme des produits du panier
     let priceTotal = localStorage.getItem("priceTotal");
+
+    // releve les informations du produits de la page displayProducts
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let address = document.getElementById("address").value;
     let city = document.getElementById("city").value;
     let email = document.getElementById("mail").value;
 
-
+    //création du tableau d'information clients
     let contact = new Object();
     contact.firstName = firstName;
     contact.lastName = lastName;
@@ -14,11 +18,12 @@ function displayOrder() {
     contact.city = city;
     contact.email = email;
 
+    // Lire crée la varaible client avec localStorage
     localStorage.setItem("contact", JSON.stringify(contact));
 
 
-    let product_id = JSON.parse(localStorage.getItem("panier"));
-    let products = []
+    let product_id = JSON.parse(localStorage.getItem("Basket"));
+    let products = [];
 
     for (id in product_id) {
         products.push = product_id[id][0];
@@ -28,7 +33,7 @@ function displayOrder() {
         contact,
         products,
     };
-    console.log(urlApi);
+
     // appel fetchRequest(methode, url, data)
     fetchRequest("POST", urlApi + "/order", objet)
         .then((data) => {
@@ -43,7 +48,7 @@ function displayOrder() {
                     <button  type='button' class='btn btn-dark m-3' onclick='displayHome("${urlApi}");'>Retour au produits</button>
                 </div>
                 `;
-            localStorage.removeItem("panier");
+            localStorage.removeItem("Basket");
             numBasket();
         }) // Résultat de l'appel `response.json ()`
         .catch((error) => console.error(error));

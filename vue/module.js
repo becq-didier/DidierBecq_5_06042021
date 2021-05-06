@@ -1,20 +1,21 @@
 /********************************************************************************* */
-// fetch appel au serveur en Get ou Post
+// fetch  Get ou Post
 function fetchRequest(methode, url, data) {
     return fetch(url, {
-        //credentials: 'same-origin', // 'include', default: 'omit'
-        method: methode, // 'GET', 'PUT', 'DELETE', etc.
-        body: JSON.stringify(data), // Coordinate the body type with 'Content-Type'
-        headers: new Headers({ "Content-Type": "application/json" }),
-    }).then((response) => response.json());
+            method: methode, // 'GET', 'PUT', 'DELETE', etc.
+            body: JSON.stringify(data), // Coordinate the body type with 'Content-Type'
+            headers: new Headers({ "Content-Type": "application/json" }),
+        })
+        .then((response) => response.json())
+        .catch(function(error) { console.log(error) });
 };
 
 /********************************************************************************** */
 // affiche le nombre d'articles a côté du menu panier
 function numBasket() {
-    produits = JSON.parse(localStorage.getItem("panier"));
+    produits = JSON.parse(localStorage.getItem("Basket"));
 
-    let element = document.getElementById("menuPanier");
+    let element = document.getElementById("menuBasket");
 
     // si article dans le panier les compter
     if (produits != null) {
@@ -35,24 +36,24 @@ function numBasket() {
 /*********************************************************************************** */
 // supprime un élément du panier
 function removeItemOnce(value) {
-    let article = JSON.parse(localStorage.getItem("panier"));
-    //  supprime 1 élément a partir égale value (Numero de ligne)
+    let article = JSON.parse(localStorage.getItem("Basket"));
+    //  supprime 1 élément a partir d'une valueur égale au numero de ligne de commande
     article.splice(value, 1);
-    localStorage.setItem("panier", JSON.stringify(article));
-
-    if (localStorage.getItem("panier") == "[]") {
-        localStorage.removeItem("panier");
+    //enregistre le changement
+    localStorage.setItem("Basket", JSON.stringify(article));
+    // si panier vide alors supprime Basket et affiche la page d'accueil
+    if (localStorage.getItem("Basket") == "[]") {
+        localStorage.removeItem("Basket");
         displayHome(urlApi);
     }
-    displayPanier(JSON.stringify(article));
+    //affiche a nouveau le panier
+    displayBasket(JSON.stringify(article));
     return false;
 };
 
 /*********************************************************************************** */
 // insert les information du produit dans le localStorage du panier
 function addStorage(refMag) {
-
-
     var url = document.getElementById("photoDuProduit").getAttribute("src");
     var name = document.getElementById("name").textContent;
     var opt = document.getElementById("options").value;
@@ -61,11 +62,11 @@ function addStorage(refMag) {
     var articles = [];
     var tab = [];
 
-    if (localStorage.getItem("panier") === null) {
-        localStorage.setItem("panier", JSON.stringify(articles));
+    if (localStorage.getItem("Basket") === null) {
+        localStorage.setItem("Basket", JSON.stringify(articles));
     }
     // Analyser les données sérialisées dans un tableau d'objets
-    articles = JSON.parse(localStorage.getItem("panier"));
+    articles = JSON.parse(localStorage.getItem("Basket"));
     // Appuyez sur les nouvelles données (que ce soit un objet ou autre chose) sur le tableau
 
     // insert les information dans tab
@@ -79,20 +80,20 @@ function addStorage(refMag) {
     articles.push(tab);
 
     // Re-sérialisez le tableau dans une chaîne et rangez-la dans localStorage
-    localStorage.setItem("panier", JSON.stringify(articles));
+    localStorage.setItem("Basket", JSON.stringify(articles));
 
     // affiche quantité de produits du panier dans le menu
     numBasket();
 
     // appel Modal - Boite de dialogue pour demander à continuer ses achats ou partir vers le panier
 
-    showModal("Confirmez", "Désirez vous aller au panier", "oui", "non", () => displayPanier(localStorage.getItem("panier")));
+    showModal("Confirmez", "Désirez vous aller au panier", "oui", "non", () => displayBasket(localStorage.getItem("Basket")));
 };
 
 /*********************************************************************************** */
 // controle les bouton incrément dans page produit
 function btnIncrement() {
-    // Bouton incrémentation quantité commandé
+
     var input = document.querySelector("#qty");
     var btnminus = document.querySelector("#qtyminus");
     var btnplus = document.querySelector("#qtyplus");
@@ -105,10 +106,12 @@ function btnIncrement() {
         btnminus !== null &&
         btnplus !== null
     ) {
+        // recuper les attribus de l'input
         var min = Number(input.getAttribute("min"));
         var max = Number(input.getAttribute("max"));
         var step = Number(input.getAttribute("step"));
 
+        //si click moins different de min ou max remettre les valeurs attibuées
         function qtyminus(e) {
             var current = Number(input.value);
             var newval = current - step;
@@ -120,7 +123,7 @@ function btnIncrement() {
             input.value = Number(newval);
             e.preventDefault();
         }
-
+        //si click plus >max remmetre la valeur attribué
         function qtyplus(e) {
             var current = Number(input.value);
             var newval = current + step;
@@ -128,7 +131,7 @@ function btnIncrement() {
             input.value = Number(newval);
             e.preventDefault();
         }
-
+        //sur click de plus et moins appeler les fonctions :
         btnminus.addEventListener("click", qtyminus);
         btnplus.addEventListener("click", qtyplus);
     }
@@ -216,4 +219,9 @@ function checkSaisie() {
             }
         };
     }
+}
+
+// retourne false si chaine n'est pas alphabétique
+function isLetter(str) {
+    return /^[a-zA-Z()]+$/.test(str);
 }

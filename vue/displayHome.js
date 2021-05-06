@@ -1,5 +1,13 @@
+// tableau de choix de l'API
+var shop = {
+        teddies: 'Ours',
+        cameras: 'Appareils photo',
+        furniture: 'Meubles'
+    }
+    //Choix de la boutique
+var choice = 1;
 //Création de la variable Global prix total(teddies,cameras,furniture)
-var urlApi = "http://localhost:3000/api/cameras";
+var urlApi = "http://localhost:3000/api/" + Object.keys(shop)[choice];
 //Appel la page Home au chargement
 document.addEventListener("DOMContentLoaded", function() {
     displayHome(`${urlApi}`);
@@ -12,8 +20,8 @@ document
 
 //Lien menu panier
 document
-    .getElementById("navPanier")
-    .setAttribute("onclick", 'displayPanier(localStorage.getItem("panier"))');
+    .getElementById("navBasket")
+    .setAttribute("onclick", 'displayBasket(localStorage.getItem("Basket"))');
 
 /*********************************************************************************** */
 /**
@@ -22,16 +30,20 @@ document
  * @param {string} description Contenu de la page d'accueil
  * @param {string} URL http://localhost:3000/api/cameras
  */
+// affiche la page d'acceuil
 function displayHome(url) {
+    // obtient les informations des articles selon l'API
     fetchRequest("GET", url)
         .then((data) => {
             // nom de la propriere de la table d'option (colors,lenses varnish)
             let options = Object.keys(data[0])[0];
             var resultat = document.getElementById("container");
-            container.innerHTML = "";
-            // console.log(resultat);
+            container.innerHTML = `
+            <h1>${shop[Object.keys(shop)[choice]]} vintage</h1>
+            `;
+            // affiche les produits sous forme d'articles
             for (const val in data) {
-                //     console.log(IdRequest);
+                // contenue html
                 container.innerHTML += `
                      <article class='box col d-flex  justify-content-center'>
                         <div class='box__inner'>
@@ -49,18 +61,23 @@ function displayHome(url) {
                                         <p class='h3' >${data[val].name}</p>
                                     </div><hr>
                                     <div class='card-text row'>
-                                        <p class='h5'>${data[val].description}</p>
+                                        <p class='h5'>${
+                                          data[val].description
+                                        }</p>
                                         <p class='col-4 text-end text-light'>option(s):</p><span class='col-8 text-light text-start' id='options${val}'></span>
                                     </div><hr>
                                     <p class='h3'>${data[val].price / 100}€</p>
                                     <div class=''>
-                                        <button id="btnProduct" class='btn btn-dark' onclick='displayProduct("${url}/${data[val]._id}")' type='button' class='btn btn-secondary'>Voir la fiche du produit</button>
+                                        <button id="btnProduct" class='btn btn-dark' onclick='displayProduct("${url}/${
+                  data[val]._id
+                }")' type='button' class='btn btn-secondary'>Voir la fiche du produit</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                      </article>
                      `;
+                // boucle pour afficher les options
                 for (const op in data[val][options]) {
                     document.getElementById("options" + val).innerHTML +=
                         "- " + data[val][options][op] + "<br>";

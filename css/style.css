@@ -16,7 +16,7 @@
 .box {
   background-color: transparent;
   min-width: 355px;
-  height: 350px;
+  height: 355px;
   perspective: 1000px;
   margin: 20px;
 }
@@ -140,7 +140,7 @@ main {
   background: rgba(255, 255, 255, 0.3);
 }
 
-#menuPanier {
+#menuBasket {
   color: white;
   width: 0;
   height: 1.5rem;
@@ -168,13 +168,13 @@ hr {
   padding: 0;
 }
 
-.panier__container__liste #ref {
+.Basket__container__liste #ref {
   font-size: 0.7rem;
 }
-.panier__container__liste__items__item span:nth-child(even) {
+.Basket__container__liste__items__item span:nth-child(even) {
   color: #0a288c;
 }
-.panier__container__liste__items__item span:nth-child(odd) {
+.Basket__container__liste__items__item span:nth-child(odd) {
   color: #6f5d37;
 }
 

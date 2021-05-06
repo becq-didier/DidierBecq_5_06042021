@@ -10,12 +10,30 @@
     <!-- CSS Personnifié -->
     <link rel="stylesheet" href="css/style.css">
 
+    <!-- icone -->
+    <link rel="shortcut icon" href="./images/Logo.png" type="image/x-icon">
+    <link rel="icon" href="./images/Logo.png" type="image/x-icon">
+
+    <!-- OpenGraph -->
+    <meta property="og:url" content="http://localhost:3001/index.html" />
+    <meta property="og:title" content="Découvrez nos produits Orinoco" />
+    <meta property="og:description" content="Découvrez tous nos produits de caméras vintage sur Orinoco" />
+    <meta property="og:image" content="images/vcam_1.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter cards -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:description" content="Découvrez tous nos produits de caméras vintage sur Orinoco">
+    <meta property="twitter:title" content="Découvrez les produits Orinoco">
+    <meta property="twitter:image" content="images/vcam_1.jpg">
+
     <title>Orinoco</title>
 </head>
 
 
 <body class="container">
-
+    <!-- entete avec barre de navigation -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -31,9 +49,9 @@
                                 class="fas fa-cubes"></span> Produits</a>
                         </li>
                         <li class="nav-item ">
-                            <a id="navPanier" class="justify-content-center nav-link d-flex m-auto" href="#">
+                            <a id="navBasket" class="justify-content-center nav-link d-flex m-auto" href="#">
                                 <span class="fas fa-shopping-basket m-1"></span>
-                                <p id="menuPanier" class="d-flex justify-content-center align-middle my-auto">0</p> &nbsp; Panier
+                                <p id="menuBasket" class="d-flex justify-content-center align-middle my-auto">0</p> &nbsp; Panier
                             </a>
                         </li>
                     </ul>
@@ -46,15 +64,15 @@
         </div>
 
     </header>
+    <!-- Contenu du site -->
     <main>
         <div id="helper"></div>
-        <h1 class="banner__title p-3">Caméras vintage</h1>
         <div class='container row' id='container'></div>
         <div id="scroll_to_top">
-            <a href="#top"><img src="../images/scrolltop.png" alt="Retourner en haut" /></a>
+            <a href="#top"><img src="images/scrolltop.png" alt="Retourner en haut" /></a>
         </div>
     </main>
-
+    <!-- pied de page -->
     <footer aria-label="Réseaux Sociaux" class="p-3 bg-secondary text-white bloc bgc-atomic-tangerine d-bloc bloc-bg-texture texture-paper" id="bloc-8">
         <div class="container">
             <div class="row">
@@ -98,9 +116,9 @@
         </div>
     </footer>
     <!-- script des pages-->
-    <script defer src="./vue/displayHome.js"></script>
+    <script defer src="vue/displayHome.js"></script>
     <script defer src="vue/displayProduct.js"></script>
-    <script defer src="vue/displayPanier.js"></script>
+    <script defer src="vue/displayBasket.js"></script>
     <script defer src="vue/displayOrder.js"></script>
     <script defer src="vue/module.js"></script>
 

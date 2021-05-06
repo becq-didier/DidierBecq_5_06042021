@@ -5,14 +5,13 @@
  * @param {string} URL http://localhost:3000/api/cameras_+_idProduit
  */
 function displayProduct(url) {
-
+    // obtient le contenu du produit selon son id
     fetchRequest('GET', url)
         .then((data) => {
-
+            // recupere le nom de l'option (colors,lenses,varnish)
             options = Object.keys(data)[0];
-            //console.log(data);
+            // affiche contenu de la fiche produit
             var resultat = document.getElementById("container");
-            // console.log(resultat);
             container.innerHTML = "";
             container.innerHTML = `
                      <article class='product d-flex justify-content-center flex-column flex-lg-row'>
@@ -43,7 +42,9 @@ function displayProduct(url) {
                                     </div>
                                     <!-- Button trigger modal -->
                                     <div class='container'>
-                                        <button type='button' onclick='addStorage(${JSON.stringify(data._id)});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
+                                        <button type='button' onclick='addStorage(${JSON.stringify(
+                                          data._id
+                                        )});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
                                         <button type='button' class='w-100 product__info__option__home btn btn-dark m-2' onclick='displayHome("${urlApi}");' >Retour aux produits</button>
                                     </div>
                                 </div>
@@ -51,15 +52,18 @@ function displayProduct(url) {
                     `;
 
             for (const op in data[options]) {
-                // console.log(data[options][op]);
-                document.getElementById("options").innerHTML += "<option value='" + data[options][op] + "'>" + data[options][op] + "</option><br>"
-
+                // affiche options
+                document.getElementById("options").innerHTML +=
+                    "<option value='" +
+                    data[options][op] +
+                    "'>" +
+                    data[options][op] +
+                    "</option><br>";
             }
 
-            // Fonction des boutons plus et moins pour le nombre d'article.
+            // control du fonctionnement des boutons plus et moins pour le nombre d'article.
             btnIncrement();
-
-        }) // Résultat de l'appel `dataonse.json ()`
+        })
         .catch((error) => console.error(error));
 
 };
