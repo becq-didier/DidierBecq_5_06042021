@@ -7,7 +7,10 @@ var shop = {
     //Choix de la boutique
 var choice = 1;
 //Création de la variable Global prix total(teddies,cameras,furniture)
-var urlApi = "http://localhost:3000/api/" + Object.keys(shop)[choice];
+var cathegory = Object.keys(shop)[choice];
+var urlApi = "http://localhost:3000/api/" + cathegory;
+// console.log(document.location.origin + "/view/data.json");
+//var urlApi = document.location.origin + "/view/data.json";
 //Appel la page Home au chargement
 document.addEventListener("DOMContentLoaded", function() {
     displayHome(`${urlApi}`);
@@ -37,7 +40,7 @@ function displayHome(url) {
         .then((data) => {
             // nom de la propriere de la table d'option (colors,lenses varnish)
             let options = Object.keys(data[0])[0];
-            var resultat = document.getElementById("container");
+            let resultat = document.getElementById("container");
             container.innerHTML = `
             <h1>${shop[Object.keys(shop)[choice]]} vintage</h1>
             `;

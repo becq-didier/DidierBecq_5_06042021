@@ -19,26 +19,31 @@ function displayBasket(articles) {
                             <legend>Formulaire de commande</legend>
                             <div class='mb-3'>
                                 <label  class='mb-3' for='firstName'>Nom :</label>
-                                <input class='form-control' type='text' id='firstName' firstName='user_firstName' pattern="[A-Za-z]{4,}" required>
-                            </div>
+                                <input class='form-control' type='text' id='firstName' firstName='user_firstName'><!--pattern="[A-Za-z]{4,}"  required-->
+                                <span id="err-firstName"></span>
+                                </div>
                             <div  class='mb-3'>
                                 <label  class='mb-3' for='lastName'>Prénom :</label>
-                                <input class='form-control' type='text' id='lastName' name='user_lastName' pattern="[A-Za-z]{4,}" required>
-                            </div>
+                                <input class='form-control' type='text' id='lastName' name='user_lastName'"><!-- pattern="[A-Za-z]{4,} required-->
+                                <span id="err-lastName"></span>
+                                </div>
                             <div class='mb-3'>
                                 <label  class='mb-3' for='address'>Adresse :</label>
-                                <textarea class='form-control'  rows='5' cols='40' id='address' name='user_address' pattern="[0-9][A-Za-z]{10,}" required></textarea>
+                                <textarea class='form-control'  rows='5' cols='40' id='address' name='user_address'></textarea><!-- pattern="[0-9][A-Za-z]{10,}" required-->
+                                <span id="err-address"></span>
                             </div>
                             <div  class='mb-3'>
                                 <label  class='mb-3' for='city'>Commune :</label>
-                                <div class='d-flex flex-row'>  
-                                    <input class='form-control column' type='text' id='city' name='user_city' pattern="[A-Za-z]{1,}" required></input>
-                                    <input class='form-control' id='commune' type='text' disabled>
-                                </div> 
+                                <!--div class='d-flex flex-row'-->  
+                                    <input class='form-control column' type='text' id='city' name='user_city'></input><!-- pattern="[A-Za-z]{1,}" required-->
+                                    <!--input class='form-control' id='commune' type='text' disabled-->
+                                <!--/div--> 
+                                <span id="err-city"></span>
                             </div>
                             <div class='mb-3'>
                                 <label  class='mb-3' for='mail'>e-mail :</label>
-                                <input class='form-control' type='email' id='mail' name='user_mail' pattern="[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+(\.[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.([cC][oO][mM]))(:[0-9]{1,5})?" required>
+                                <input class='form-control' type='' id='mail' name='user_mail'><!-- pattern="[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+(\.[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.([cC][oO][mM]))(:[0-9]{1,5})?" required-->
+                                <span id="err-mail"></span>
                             </div>
                             <div class='m-3'>
                                 <button  type='submit' name='submit' class='btn btn-success text-warning'>Valider le Basket</button>
@@ -115,41 +120,33 @@ function displayBasket(articles) {
 
         numBasket();
 
-        document
-            .getElementById("validBasket")
-            .addEventListener("submit", function(event) {
-                event.preventDefault();
-                displayOrder();
-            });
-
-
         //verification de la saisie
-        CheckSaisie();
+        CheckCapture();
 
         //***************************************************************************
         // https://api.gouv.fr/documentation/api-geo
         // https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port&autocomplete=0
 
-        const city = document.getElementById("city");
-        const commune = document.getElementById("commune");
-        city.addEventListener("focusout", function(event) {
-            if (isLetter(city.value)) {
-                fetchRequest(
-                    "GET",
-                    `https://geo.api.gouv.fr/communes?nom=${city.value}&fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=json&geometry=center`
-                ).then((response) => {
-                    if (response != "") {
-                        commune.value = response[0].codesPostaux;
-                    } else { // response null si commune inexistante
-                        commune.value = '';
-                        city.value = "";
-                    }
-                });
-            } else { //si pas des lettres
-                commune.value = "#erreur!";
-                city.value = "";
-            }
-        });
+        // const city = document.getElementById("city");
+        // const commune = document.getElementById("commune");
+        // city.addEventListener("keyup", function(event) {
+        //     if (isLetter(city.value)) {
+        //         fetchRequest(
+        //             "GET",
+        //             `https://geo.api.gouv.fr/communes?nom=${city.value}&fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=json&geometry=center`
+        //         ).then((response) => {
+        //             if (response != "") {
+        //                 commune.value = response[0].codesPostaux;
+        //             } else { // response null si commune inexistante
+        //                 commune.value = '';
+        //                 city.value = "";
+        //             }
+        //         });
+        //     } else { //si pas des lettres
+        //         commune.value = "#erreur!";
+        //         city.value = "";
+        //     }
+        // });
     } else {
         // si pas d'article affiche boite de dialogue 1 bouton
         showModal(

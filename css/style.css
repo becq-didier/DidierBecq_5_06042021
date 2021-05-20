@@ -14,41 +14,46 @@
 
 /*effet 3d*/
 .box {
-  background-color: transparent;
-  min-width: 355px;
-  height: 355px;
-  perspective: 1000px;
-  margin: 20px;
-}
-.box__inner {
-  position: relative;
-  width: 355px;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.5s;
-  transform-style: preserve-3d;
-}
-.box__inner__front {
-  background-color: #CF9B83;
-  color: #111111;
-}
-.box__inner__back {
-  background-color: #A366C5;
-  color: #eeeeee;
-  transform: rotateY(180deg);
-}
-.box__inner__front, .box__inner__back {
-  position: absolute;
-  width: 355px;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: 5%;
-}
-.box:hover .box__inner {
-  transform: rotateY(180deg);
+  min-width: 280px;
 }
 
+@media only screen and (min-width: 495px) {
+  .box {
+    background-color: transparent;
+    min-width: 355px;
+    height: 355px;
+    perspective: 1000px;
+    margin: 20px;
+  }
+  .box__inner {
+    position: relative;
+    width: 355px;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .box__inner__front {
+    background-color: #CF9B83;
+    color: #111111;
+  }
+  .box__inner__back {
+    background-color: #A366C5;
+    color: #eeeeee;
+    transform: rotateY(180deg);
+  }
+  .box__inner__front, .box__inner__back {
+    position: absolute;
+    width: 355px;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 5%;
+  }
+  .box:hover .box__inner {
+    transform: rotateY(180deg);
+  }
+}
 /*  Bouton incrémentation  */
 .product__img {
   width: 100%;
@@ -176,6 +181,29 @@ hr {
 }
 .Basket__container__liste__items__item span:nth-child(odd) {
   color: #6f5d37;
+}
+
+[id^=err-] {
+  visibility: hidden;
+  border-radius: 10px;
+  padding: 5px;
+  background: #f84d4d;
+  color: wheat;
+  position: relative;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+[id^=err-]::before {
+  content: "";
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fd7171;
+  left: 10px;
+  top: -10px;
+  position: absolute;
 }
 
 .nav-item:after,

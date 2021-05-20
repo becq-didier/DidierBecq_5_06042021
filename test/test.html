@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document test</title>
+    <script defer src="../view/functions.js"></script>
+    <script>
+        fetch('patronymes.json')
+            .then(response => response.json())
+            .then((data) => {
+                console.log("*******************Test isLetter*******************");
+                for (num in data) {
+
+                    console.log("\"" + data[num] + "\" is " + isLetter(data[num]));
+
+                }
+            });
+
+        fetch('length.json')
+            .then(response => response.json())
+            .then((data) => {
+                console.log("*******************Test testLength*******************");
+                for (num in data) {
+
+                    console.log("test [1-3] de \"" + data[num] + "\" is " + textLength(data[num], 1, 3));
+
+                }
+            });
+        fetch('address.json')
+            .then(response => response.json())
+            .then((data) => {
+                console.log("*******************Test isAddress*******************");
+                for (num in data) {
+
+                    console.log("\"" + data[num] + "\" is " + isMail(data[num]));
+
+                }
+            });
+        fetch('mail.json')
+            .then(response => response.json())
+            .then((data) => {
+                console.log("*******************Test isMail*******************");
+                for (num in data) {
+
+                    console.log("\"" + data[num] + "\" is " + isMail(data[num]));
+
+                }
+            });
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

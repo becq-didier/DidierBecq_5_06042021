@@ -37,14 +37,17 @@ function displayOrder() {
     // appel fetchRequest(methode, url, data)
     fetchRequest("POST", urlApi + "/order", objet)
         .then((data) => {
-            var resultat = document.getElementById("container");
-
+            let resultat = document.getElementById("container");
+            let TVA = 0.2;
+            let TTC = parseFloat(priceTotal).toFixed(2);
+            let HT = parseFloat(TTC / (1 + TVA)).toFixed(2);
             container.innerHTML = `
                 <div class='container-fluid text-center alert-info m-3'>
                     <p>Merci de nous avoir choisi !</p>
                     <p>Votre commande sera expédiée sous 24 heures</p>
                     <p>N° de commande: ${data.orderId}</p>
                     <p>Montant total: ${parseFloat(priceTotal).toFixed(2)}€</p>
+                    <p>HT: ${HT}€</p>
                     <button  type='button' class='btn btn-dark m-3' onclick='displayHome("${urlApi}");'>Retour au produits</button>
                 </div>
                 `;

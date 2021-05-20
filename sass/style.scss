@@ -67,6 +67,29 @@
         }
     }
     
+    [id^="err-"] {
+        visibility: hidden;
+        border-radius: 10px;
+        padding: 5px;
+        background: rgb(248, 77, 77);
+        color: wheat;
+        position: relative;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+    }
+    
+    [id^="err-"]::before {
+        content: "";
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid rgb(253, 113, 113);
+        left: 10px;
+        top: -10px;
+        position: absolute;
+    }
+    
     .nav-item,
     .navbar-brand {
         &:after {

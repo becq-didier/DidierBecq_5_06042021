@@ -8,6 +8,7 @@ function displayProduct(url) {
     // obtient le contenu du produit selon son id
     fetchRequest('GET', url)
         .then((data) => {
+            localStorage.setItem("selectedProduct", JSON.stringify(data));
             // recupere le nom de l'option (colors,lenses,varnish)
             options = Object.keys(data)[0];
             // affiche contenu de la fiche produit
@@ -21,7 +22,7 @@ function displayProduct(url) {
                                 }><br>
                             </div>
                             <div class='product__info d-flex  align-items-center justify-content-center  flex-column flex-lg-row'>
-                                <div class='product__info__description col-6 p-2'>
+                                <div class='product__info__description col-md-6 p-2'>
                                     name: <span id='name'>${
                                       data.name
                                     }</span><br>
@@ -30,7 +31,7 @@ function displayProduct(url) {
                                     }</span>€<br>
                                     description:${data.description}<br>
                                 </div>
-                                <div class='product__info__option d-flex flex-column col-6 p-2'>
+                                <div class='product__info__option d-flex flex-column col-md-6 p-2'>
                                     <label for='options'>Option</label>
                                     <select name='options' id='options'>
                                     </select>
@@ -42,9 +43,7 @@ function displayProduct(url) {
                                     </div>
                                     <!-- Button trigger modal -->
                                     <div class='container'>
-                                        <button type='button' onclick='addStorage(${JSON.stringify(
-                                          data._id
-                                        )});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
+                                        <button type='button' onclick='addStorage(${JSON.stringify(data._id)});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
                                         <button type='button' class='w-100 product__info__option__home btn btn-dark m-2' onclick='displayHome("${urlApi}");' >Retour aux produits</button>
                                     </div>
                                 </div>
