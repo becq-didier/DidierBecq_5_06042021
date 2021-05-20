@@ -1,14 +1,19 @@
+import { numBasket, removeItemOnce } from "./functions.js";
+import { CheckCapture } from "./checkForm.js";
+import { displayOrder } from "./displayOrder.js";
+import { checkData } from "./checkData.js";
 // affiche la page d'accueil
-function displayBasket(articles) {
+export function displayBasket() {
+    let basket = localStorage.getItem("Basket");
     //verifie s'il y a un article
-    if (articles != null) {
-        articles = JSON.parse(articles);
+    if (basket != null) {
+        basket = JSON.parse(basket);
         // recuperation des informations du client déjà memorisés
         let contact = JSON.parse(localStorage.getItem("contact"));
         //affiche la page panier
         const resultat = document.getElementById("container");
         container.innerHTML = `
-            <articles class='Basket container'>
+            <article class='Basket container'>
                 <div class='Basket__container col'>
                     <div class=' alert-primary' id='Basket'></div>
                     <div class=' bg-success text-warning ' id='total'></div>
@@ -53,7 +58,7 @@ function displayBasket(articles) {
                 </div>
             </article>
             `;
-        // si 'contact' est différent de null affiche les infos mémorisées de localStrage 'contact'
+        // si 'contact'(localStorage) est différent de null affiche les infos mémorisées
         if (contact != null) {
             document.getElementById("firstName").value = contact.firstName;
             document.getElementById("lastName").value = contact.lastName;
@@ -62,13 +67,13 @@ function displayBasket(articles) {
             document.getElementById("mail").value = contact.email;
         }
         // si articles présent les afficher
-        if (articles[0] != null) {
+        if (basket[0] != null) {
             let priceTotal = 0;
             let price = 0;
-            for (const num in articles) {
-                priceTotal += parseFloat(articles[num][4] * articles[num][5]);
-                price = articles[num][4];
-                let minImageUrl = articles[num][1].replace(".jpg", "-min.jpg");
+            for (const num in basket) {
+                priceTotal += parseFloat(basket[num][4] * basket[num][5]);
+                price = basket[num][4];
+                let minImageUrl = basket[num][1].replace(".jpg", "-min.jpg");
                 minImageUrl = minImageUrl.replace("images", "images/min");
                 document.getElementById("Basket").innerHTML += `
                     <div class='Basket__container__liste__items row p-1 align-items-center'>\
@@ -77,23 +82,23 @@ function displayBasket(articles) {
                         </div>\
                         <!--div class='Basket__container__liste__items__item text-center col-sm'>\
                         <span class='p-1'> N°" + {(parseInt(num) + 1)} + "</span>\
-                            <span id='ref' class='p-1'> Ref: ${articles[num][0]}</span>\
+                            <span id='ref' class='p-1'> Ref: ${basket[num][0]}</span>\
                         </div-->\
                         <div class='Basket__container__liste__items__item text-center col-sm'>\
-                            <span class='p-1'>${articles[num][2]}</span>\
+                            <span class='p-1'>${basket[num][2]}</span>\
                         </div>\
                         <div class='Basket__container__liste__items__item text-center col-sm'>\
-                            <span class='p-1'>${articles[num][3]}</span>\
+                            <span class='p-1'>${basket[num][3]}</span>\
                         </div>\
                         <div class='Basket__container__liste__items__item text-center col-sm'>\
                             <span class='p-1'>${parseFloat(price).toFixed(2)}€</span>\
                         </div>\
                         <div class='Basket__container__liste__items__item text-center col-sm'>\
-                            <span class='p-1'> quantité: ${articles[num][5]}</span>\
+                            <span class='p-1'> quantité: ${basket[num][5]}</span>\
                         </div>\
                         <div class='Basket__container__liste__items__item text-center col-sm'>\
-                            <button onclick='removeItemOnce(${num});' class='btn btn-danger' type='button'>\
-                                <a class='p-1' ><span class='far fa-trash-alt'></<span></a>Supprimer\
+                            <button id ="${num}" class='btn btn-danger btnRemove' type='button'>\
+                                <a  class='p-1' ><span class='far fa-trash-alt'></<span></a>Supprimer\
                             </button>\
                         </div>\
                     </div><hr>
@@ -101,63 +106,29 @@ function displayBasket(articles) {
             }
             // affiche le total de la commande
             localStorage.setItem("priceTotal", priceTotal);
-            document.getElementById("total").textContent =
-                "Somme total de la commande: " +
-                parseFloat(priceTotal).toFixed(2) +
-                "€";
-        } else {
-            // affiche panier vide
-            document.getElementById("Basket").innerHTML += "Panier vide";
-            // affiche un messafge de redirection vers les articles
-            showModal(
-                "Information",
-                "Votre panier est vide",
-                null,
-                "fermer",
-                () => displayBasket(localStorage.getItem("Basket"))
-            );
+            document.getElementById("total").textContent = "Somme total de la commande: " + parseFloat(priceTotal).toFixed(2) + "€";
         }
-
+        // mise a jour affichage de la qty d'articles dans le panier
         numBasket();
 
-        //verification de la saisie
-        CheckCapture();
-
-        //***************************************************************************
-        // https://api.gouv.fr/documentation/api-geo
-        // https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port&autocomplete=0
-
-        // const city = document.getElementById("city");
-        // const commune = document.getElementById("commune");
-        // city.addEventListener("keyup", function(event) {
-        //     if (isLetter(city.value)) {
-        //         fetchRequest(
-        //             "GET",
-        //             `https://geo.api.gouv.fr/communes?nom=${city.value}&fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=json&geometry=center`
-        //         ).then((response) => {
-        //             if (response != "") {
-        //                 commune.value = response[0].codesPostaux;
-        //             } else { // response null si commune inexistante
-        //                 commune.value = '';
-        //                 city.value = "";
-        //             }
-        //         });
-        //     } else { //si pas des lettres
-        //         commune.value = "#erreur!";
-        //         city.value = "";
-        //     }
-        // });
+        //ecoute btn submit & check saisie formulaire
+        let valid = document.getElementById("validBasket");
+        valid.addEventListener("submit", function(e) {
+            e.preventDefault();
+            checkData();
+            //verification de la saisie formulaire
+            if (CheckCapture()) {
+                displayOrder();
+            };
+        });
+        //Evénement click sur tous les boutons => remove */
+        let btnRemove = document.getElementsByClassName("btnRemove");
+        for (let i = 0; i < btnRemove.length; i++) {
+            let elt = btnRemove[i];
+            btnRemove[i].addEventListener("click", function(event) { removeItemOnce(i); });
+        }
     } else {
-        // si pas d'article affiche boite de dialogue 1 bouton
-        showModal(
-            "Information",
-            "Votre panier ne contient aucun article", null,
-            "fermer",
-            () => displayBasket(localStorage.getItem("Basket"))
-        );
+        // si pas d'article affiche boite de dialogue (1 bouton)
+        showModal("Information", "Votre panier ne contient aucun article", "Fermer", null, () => location.href = "index.html");
     }
-
-
-
-
 }

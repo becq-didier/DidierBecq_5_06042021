@@ -1,20 +1,26 @@
+import { addStorage } from "./functions.js"
 /**
  *
  * @param {string} title Page produit
  * @param {string} description Contenu de la page produit
  * @param {string} URL http://localhost:3000/api/cameras_+_idProduit
  */
-function displayProduct(url) {
-    // obtient le contenu du produit selon son id
-    fetchRequest('GET', url)
-        .then((data) => {
-            localStorage.setItem("selectedProduct", JSON.stringify(data));
-            // recupere le nom de l'option (colors,lenses,varnish)
-            options = Object.keys(data)[0];
-            // affiche contenu de la fiche produit
-            var resultat = document.getElementById("container");
-            container.innerHTML = "";
-            container.innerHTML = `
+export function displayProduct(_id) {
+    let datas = JSON.parse(localStorage.getItem("Products"));
+    var index = -1;
+    var val = _id;
+    var index = datas.findIndex(function(item) {
+        return item._id === val;
+    });
+    let data = datas[index];
+
+    localStorage.setItem("selectedProduct", JSON.stringify(data));
+    // recupere le nom de l'option (colors,lenses,varnish)
+    let options = Object.keys(data)[0];
+    // affiche contenu de la fiche produit
+    var resultat = document.getElementById("container");
+    container.innerHTML = "";
+    container.innerHTML = `
                      <article class='product d-flex justify-content-center flex-column flex-lg-row'>
                             <div class='product__img d-flex align-items-center justify-content-center'>
                                 <img class='card-img-top' id='photoDuProduit' src=${
@@ -43,26 +49,29 @@ function displayProduct(url) {
                                     </div>
                                     <!-- Button trigger modal -->
                                     <div class='container'>
-                                        <button type='button' onclick='addStorage(${JSON.stringify(data._id)});' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
-                                        <button type='button' class='w-100 product__info__option__home btn btn-dark m-2' onclick='displayHome("${urlApi}");' >Retour aux produits</button>
+                                        <button type='button' id='btnAdd' class='w-100 product__info__option__commander btn btn-dark m-2'  >Ajouter au panier</button>
+                                        <button type='button' id='btnRtn' class='w-100 product__info__option__home btn btn-dark m-2'  >Retour aux produits</button>
                                     </div>
                                 </div>
                     </article>
                     `;
 
-            for (const op in data[options]) {
-                // affiche options
-                document.getElementById("options").innerHTML +=
-                    "<option value='" +
-                    data[options][op] +
-                    "'>" +
-                    data[options][op] +
-                    "</option><br>";
-            }
+    for (const op in data[options]) {
+        // affiche options
+        document.getElementById("options").innerHTML +=
+            "<option value='" +
+            data[options][op] +
+            "'>" +
+            data[options][op] +
+            "</option><br>";
+    }
+    //ecoute bouton btnAdd
+    document.getElementById("btnAdd").addEventListener("click", function(event) {
+        addStorage(_id);
+    });
 
-            // control du fonctionnement des boutons plus et moins pour le nombre d'article.
-            btnIncrement();
-        })
-        .catch((error) => console.error(error));
-
-};
+    //ecoute bouton btnRtn
+    document.getElementById("btnRtn").addEventListener("click", function(event) {
+        location.href = "index.html";
+    });
+}
