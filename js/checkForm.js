@@ -1,4 +1,4 @@
-export function CheckCapture() {
+export function CheckForm() {
     let display = true;
     // Verification champ fistName
     let firstName = document.getElementById("firstName");

@@ -1,4 +1,5 @@
 import { displayBasket } from "./displayBasket.js";
+import { showModal } from "./modal.js";
 /********************************************************************************* */
 // fetch  Get ou Post
 export function fetchRequest(methode, url, data) {
@@ -55,9 +56,8 @@ export function addStorage(_id) {
     if (localStorage.getItem("Basket") === null) {
         localStorage.setItem("Basket", JSON.stringify(articles));
     }
-    // Analyser les données sérialisées dans un tableau d'objets
+    // récupère les données sérialisées dans un tableau d'objets
     articles = JSON.parse(localStorage.getItem("Basket"));
-    // Ajoute aux données (que ce soit un objet ou autre chose) dans le pannier
 
     // insert les informations dans tab
     tab.push(_id);
@@ -72,16 +72,9 @@ export function addStorage(_id) {
     // Re-sérialisez le tableau dans une chaîne et rangez-la dans localStorage
     localStorage.setItem("Basket", JSON.stringify(articles));
 
-    // affiche quantité de produits du panier dans le menu
-
     // appel Modal - Boite de dialogue pour demander à continuer ses achats ou partir vers le panier
     showModal("Confirmez", "Désirez vous aller au panier", "oui", "non", () => displayBasket());
-    //         } else {
-    //             showModal("Attention!", "L'intégrité des informations sont corrompu", null, "fermer");
-    //             displayHome(urlApi);
-    //         }
-    //     })
-    //     .catch((error) => console.error(error));
+
 }
 
 /********************************************************************************** */

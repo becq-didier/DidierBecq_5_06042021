@@ -1,20 +1,19 @@
 import { displayProduct } from './displayProduct.js';
-import { btnIncrement, numBasket } from './functions.js';
+import { numBasket } from './functions.js';
 
 export function displayHome(title) {
     let data = JSON.parse(localStorage.getItem("Products"));
     // nom de la propriere de la table d'option (colors,lenses varnish)
-    // console.log(Object.keys(data));
     let options = Object.keys(data[0])[0];
     let resultat = document.getElementById("container");
 
-    container.innerHTML = `<h1>${title} vintage</h1>`;
+    resultat.innerHTML = `<h1>${title} vintage</h1>`;
 
     // affiche les produits sous forme d 'articles
     for (const val in data) {
         let id = data[val]._id;
         // contenue html
-        container.innerHTML += `
+        resultat.innerHTML += `
                      <article class='box col d-flex  justify-content-center'>
                         <div class='box__inner'>
                             <div id='cart' class='box__inner__front d-flex align-items-center justify-content-center'>
@@ -56,7 +55,6 @@ export function displayHome(title) {
         let elt = btnProduct[i];
         btnProduct[i].addEventListener("click", function() {
             displayProduct(this.getAttribute("id"));
-            btnIncrement();
         });
     }
 }

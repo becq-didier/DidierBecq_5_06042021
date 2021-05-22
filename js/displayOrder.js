@@ -12,7 +12,7 @@
         let city = document.getElementById("city").value;
         let email = document.getElementById("mail").value;
 
-        //création du tableau d'information clients
+        //création du tableau d'informations clients
         let contact = new Object();
         contact.firstName = firstName;
         contact.lastName = lastName;
@@ -20,30 +20,30 @@
         contact.city = city;
         contact.email = email;
 
-        // Lire crée la varaible client avec localStorage
+        // crée la varaible client avec localStorage
         localStorage.setItem("contact", JSON.stringify(contact));
 
-
+        // récupère l'objet panier dans localStorage
         let product_id = JSON.parse(localStorage.getItem("Basket"));
         let products = [];
 
         for (let _id in product_id) {
             products.push = product_id[_id][0];
         }
-
+        //crée l'obje a transmettre pour récupérer le numéro de commande
         let objet = {
             contact,
             products,
         };
 
-        // appel fetchRequest(methode, url, data)
+        // appelle fetchRequest(methode, url, data)
         fetchRequest("POST", urlApi + "/order", objet)
             .then((data) => {
                 let resultat = document.getElementById("container");
                 let TVA = 0.2;
                 let TTC = parseFloat(priceTotal).toFixed(2);
                 let HT = parseFloat(TTC / (1 + TVA)).toFixed(2);
-                container.innerHTML = `
+                resultat.innerHTML = `
                 <div class='container-fluid text-center alert-info m-3'>
                     <p>Merci de nous avoir choisi !</p>
                     <p>Votre commande sera expédiée sous 24 heures</p>
@@ -59,6 +59,4 @@
                 btnRtn.addEventListener("click", function(event) { location.href = "index.html"; });
             }) // Résultat de l'appel `response.json ()`
             .catch((error) => console.error(error));
-
-
     };

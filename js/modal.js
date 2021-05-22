@@ -2,7 +2,7 @@
 
 var modalWrap = null;
 
-const showModal = (title, description, yesBtnLabel = 'Yes', noBtnLabel = 'Cancel', callback) => {
+export const showModal = (title, description, yesBtnLabel = 'Yes', noBtnLabel = 'Cancel', callback) => {
     if (modalWrap !== null) {
         modalWrap.remove();
     }

@@ -1,7 +1,8 @@
 import { numBasket, removeItemOnce } from "./functions.js";
-import { CheckCapture } from "./checkForm.js";
+import { CheckForm } from "./checkForm.js";
 import { displayOrder } from "./displayOrder.js";
 import { checkData } from "./checkData.js";
+import { showModal } from './modal.js';
 // affiche la page d'accueil
 export function displayBasket() {
     let basket = localStorage.getItem("Basket");
@@ -12,7 +13,7 @@ export function displayBasket() {
         let contact = JSON.parse(localStorage.getItem("contact"));
         //affiche la page panier
         const resultat = document.getElementById("container");
-        container.innerHTML = `
+        resultat.innerHTML = `
             <article class='Basket container'>
                 <div class='Basket__container col'>
                     <div class=' alert-primary' id='Basket'></div>
@@ -111,22 +112,23 @@ export function displayBasket() {
         // mise a jour affichage de la qty d'articles dans le panier
         numBasket();
 
-        //ecoute btn submit & check saisie formulaire
-        let valid = document.getElementById("validBasket");
-        valid.addEventListener("submit", function(e) {
-            e.preventDefault();
-            checkData();
-            //verification de la saisie formulaire
-            if (CheckCapture()) {
-                displayOrder();
-            };
-        });
         //Evénement click sur tous les boutons => remove */
         let btnRemove = document.getElementsByClassName("btnRemove");
         for (let i = 0; i < btnRemove.length; i++) {
             let elt = btnRemove[i];
             btnRemove[i].addEventListener("click", function(event) { removeItemOnce(i); });
         }
+
+        //ecoute btn submit & check saisie formulaire
+        let valid = document.getElementById("validBasket");
+        valid.addEventListener("submit", function(e) {
+            e.preventDefault();
+            checkData();
+            //verification de la saisie formulaire
+            if (CheckForm()) {
+                displayOrder();
+            };
+        });
     } else {
         // si pas d'article affiche boite de dialogue (1 bouton)
         showModal("Information", "Votre panier ne contient aucun article", "Fermer", null, () => location.href = "index.html");

@@ -13,7 +13,7 @@ var choice = 1;
 var cathegory = Object.keys(shop)[choice];
 var title = shop[Object.keys(shop)[choice]];
 var urlApi = "http://localhost:3000/api/" + cathegory;
-//var urlApi = document.location.origin + "/js/data.json";
+
 localStorage.setItem("urlApi", urlApi);
 //Appel la page Home au chargement
 document.addEventListener("DOMContentLoaded", function() {
