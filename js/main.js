@@ -18,7 +18,7 @@ localStorage.setItem("urlApi", urlApi);
 //Appel la page Home au chargement
 document.addEventListener("DOMContentLoaded", function() {
     fetchRequest("GET", urlApi).then((data) => {
-        // console.log(JSON.stringify(data));
+
         localStorage.setItem("Products", JSON.stringify(data));
         displayHome(title);
     })

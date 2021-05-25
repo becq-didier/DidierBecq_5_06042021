@@ -15,7 +15,7 @@ export function fetchRequest(methode, url, data) {
 }
 
 /*********************************************************************************** */
-// controle les boutons incrémente dans page produit
+// controle les boutons d'incrémentation dans page produit
 export function btnIncrement() {
     document.getElementById("qtyminus").addEventListener("click", function(e) {
         let qty = Number(document.getElementById("qty").value);
@@ -66,10 +66,10 @@ export function addStorage(_id) {
     tab.push(_opt);
     tab.push(_price);
     tab.push(_qty);
-    // insert le tableau tab dans le tableau artilces
+    // insert le tableau tab dans le tableau articles
     articles.push(tab);
 
-    // Re-sérialisez le tableau dans une chaîne et rangez-la dans localStorage
+    // Re-sérialiser le tableau dans une chaîne et mémoriser dans localStorage
     localStorage.setItem("Basket", JSON.stringify(articles));
 
     // appel Modal - Boite de dialogue pour demander à continuer ses achats ou partir vers le panier

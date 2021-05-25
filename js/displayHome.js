@@ -3,7 +3,7 @@ import { numBasket } from './functions.js';
 
 export function displayHome(title) {
     let data = JSON.parse(localStorage.getItem("Products"));
-    // nom de la propriere de la table d'option (colors,lenses varnish)
+    // nom de la propriete de la table d'option (colors,lenses varnish)
     let options = Object.keys(data[0])[0];
     let resultat = document.getElementById("container");
 

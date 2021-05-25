@@ -1,11 +1,6 @@
 import { addStorage } from "./functions.js"
 import { btnIncrement } from "./functions.js";
-/**
- *
- * @param {string} title Page produit
- * @param {string} description Contenu de la page produit
- * @param {string} URL http://localhost:3000/api/cameras_+_idProduit
- */
+
 export function displayProduct(_id) {
     //récupération des données du produit choisi
     let datas = JSON.parse(localStorage.getItem("Products"));

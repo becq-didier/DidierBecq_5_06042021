@@ -1,18 +1,18 @@
 import { fetchRequest } from './functions.js'
 import { showModal } from "./modal.js";
 export function checkData() {
-    //réécrit les données serveur qui pourrait etre changer dans localstorage
+    //réécrit les données serveur qui pourrait etre charger dans localstorage
     let urlApi = localStorage.getItem("urlApi");
 
     fetchRequest("GET", urlApi).then((data) => {
         localStorage.setItem("Products", JSON.stringify(data));
 
-        //vérifié les données imageUrl, name, price
-        //let data = JSON.parse(localStorage.getItem('Products'));
+        //vérifie les données imageUrl, name, price
+
         let basket = JSON.parse(localStorage.getItem('Basket'));
 
         if (!checkId(data, basket) || !checkPriceTotal(basket)) {
-            //localStorage.clear();
+            localStorage.clear();
             showModal("Attention", "l'intégrité des données est corrompu, le panier sera supprimé!!", "Fermer", null, () => (location.href = "index.html"));
 
         };
@@ -31,7 +31,7 @@ function checkId(data, basket) {
                 //compte le nombre id
                 valide_id++;
 
-                //Img Name Price
+                //vérifie Img Name Price
                 if (
                     basket[numBasket][1] == data[numData].imageUrl &&
                     basket[numBasket][2] == data[numData].name &&
@@ -40,7 +40,7 @@ function checkId(data, basket) {
                     valide_ImgNamePrice++;
                 }
 
-                //option
+                //verifie option
                 let keyOption = Object.keys(data[0])[0];
                 let options = data[numData][`${keyOption}`];
 
@@ -55,14 +55,14 @@ function checkId(data, basket) {
     return valide_id == basket.length && valide_Option == basket.length && valide_ImgNamePrice == basket.length;
 };
 
-
+// vérifie le prix total
 function checkPriceTotal(basket) {
     let priceTotal = 0;
     for (let numBasket in basket) {
         console.log(basket[numBasket][5]);
         priceTotal += parseFloat(basket[numBasket][4] * basket[numBasket][5]);
     }
-    console.log(priceTotal);
+
     if (priceTotal == localStorage.getItem("priceTotal")) {
         return true;
     };

@@ -5,14 +5,14 @@
         //récupére la somme des produits du panier
         let priceTotal = localStorage.getItem("priceTotal");
 
-        // releve les informations du produits de la page displayProducts
+        // releve les informations du produit de la page displayProducts
         let firstName = document.getElementById("firstName").value;
         let lastName = document.getElementById("lastName").value;
         let address = document.getElementById("address").value;
         let city = document.getElementById("city").value;
         let email = document.getElementById("mail").value;
 
-        //création du tableau d'informations clients
+        //création du tableau d'informations client
         let contact = new Object();
         contact.firstName = firstName;
         contact.lastName = lastName;
@@ -20,7 +20,7 @@
         contact.city = city;
         contact.email = email;
 
-        // crée la varaible client avec localStorage
+        // crée la variable client avec localStorage
         localStorage.setItem("contact", JSON.stringify(contact));
 
         // récupère l'objet panier dans localStorage
@@ -30,13 +30,13 @@
         for (let _id in product_id) {
             products.push = product_id[_id][0];
         }
-        //crée l'obje a transmettre pour récupérer le numéro de commande
+        //crée l'objet a transmettre pour récupérer le numéro de commande
         let objet = {
             contact,
             products,
         };
 
-        // appelle fetchRequest(methode, url, data)
+        // appel fetchRequest(methode, url, data)
         fetchRequest("POST", urlApi + "/order", objet)
             .then((data) => {
                 let resultat = document.getElementById("container");

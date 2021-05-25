@@ -91,10 +91,10 @@ export function CheckForm() {
 // retourne false si chaine n'est pas alphabétique
 export function isLetter(str) {
     return /^[a-zA-Z'éèêëâäîï ()]+$/.test(str.trim());
-    //return /^[a-zA-Z'éèêëâäîï]+( [a-zA-Z'éèêëâäîï]+){0,8}$/.test(str.trim());
+
 }
 
-// retourne fasle si le nombres de caractères est non compris entre min et max
+// retourne false si le nombre de caractères est non compris entre min et max
 export function textLength(str, min, max) {
     if (parseInt(str.length) < min || parseInt(str.length) > max) {
         return false;
@@ -102,7 +102,7 @@ export function textLength(str, min, max) {
     return true;
 }
 
-// retourne false si
+// retourne false si pas adresse 
 export function isAddress(str) {
     return /^([0-9a-zA-Z'àâéèêëôùûçÏÎîïÀÂÉÈÔÙÛÇ-\s]{1,50})$/.test(str);
 }

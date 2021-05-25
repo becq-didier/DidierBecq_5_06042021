@@ -112,7 +112,7 @@ export function displayBasket() {
         // mise a jour affichage de la qty d'articles dans le panier
         numBasket();
 
-        //Evénement click sur tous les boutons => remove */
+        //Evénement click sur tous les boutons => remove 
         let btnRemove = document.getElementsByClassName("btnRemove");
         for (let i = 0; i < btnRemove.length; i++) {
             let elt = btnRemove[i];
