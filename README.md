@@ -19,7 +19,7 @@ console when the server starts, e.g. `Listening on port 3001`.
 ## Ouverture du Projet ##
 
 * Télécharger le Projet Orinoco sur GitHub : [Ici](https://github.com/becq-didier/DidierBecq_5_06042021/archive/refs/heads/newVersion.zip)
-* Ouvrir le projet dézippé avec Visual Studio Code
+* Ouvrir le projet dézipper avec Visual Studio Code
 * Installer npm avec la commande dans le terminal : npm install (Installer Node JS le cas échéant avant)
 * Installer le plugin ‘Live Server’ dans VS Code 
 * Lancer le server pour la base de donnée avec la commande dans le terminal : node server
