@@ -5,15 +5,16 @@ import { checkData } from "./checkData.js";
 import { showModal } from './modal.js';
 // affiche la page d'accueil
 export function displayBasket() {
-    let basket = localStorage.getItem("Basket");
-    //verifie s'il y a un article
-    if (basket != null) {
-        basket = JSON.parse(basket);
-        // recuperation des informations du client déjà memorisés
-        let contact = JSON.parse(localStorage.getItem("contact"));
-        //affiche la page panier
-        const resultat = document.getElementById("container");
-        resultat.innerHTML = `
+    try {
+        let basket = localStorage.getItem("Basket");
+        //verifie s'il y a un article
+        if (basket != null) {
+            basket = JSON.parse(basket);
+            // recuperation des informations du client déjà memorisés
+            let contact = JSON.parse(localStorage.getItem("contact"));
+            //affiche la page panier
+            const resultat = document.getElementById("container");
+            resultat.innerHTML = `
             <article class='Basket container'>
                 <div class='Basket__container col'>
                     <div class=' alert-primary' id='Basket'></div>
@@ -59,24 +60,24 @@ export function displayBasket() {
                 </div>
             </article>
             `;
-        // si 'contact'(localStorage) est différent de null affiche les infos mémorisées
-        if (contact != null) {
-            document.getElementById("firstName").value = contact.firstName;
-            document.getElementById("lastName").value = contact.lastName;
-            document.getElementById("address").textContent = contact.address;
-            document.getElementById("city").value = contact.city;
-            document.getElementById("mail").value = contact.email;
-        }
-        // si articles présent les afficher
-        if (basket[0] != null) {
-            let priceTotal = 0;
-            let price = 0;
-            for (const num in basket) {
-                priceTotal += parseFloat(basket[num][4] * basket[num][5]);
-                price = basket[num][4];
-                let minImageUrl = basket[num][1].replace(".jpg", "-min.jpg");
-                minImageUrl = minImageUrl.replace("images", "images/min");
-                document.getElementById("Basket").innerHTML += `
+            // si 'contact'(localStorage) est différent de null affiche les infos mémorisées
+            if (contact != null) {
+                document.getElementById("firstName").value = contact.firstName;
+                document.getElementById("lastName").value = contact.lastName;
+                document.getElementById("address").textContent = contact.address;
+                document.getElementById("city").value = contact.city;
+                document.getElementById("mail").value = contact.email;
+            }
+            // si articles présent les afficher
+            if (basket[0] != null) {
+                let priceTotal = 0;
+                let price = 0;
+                for (const num in basket) {
+                    priceTotal += parseFloat(basket[num][4] * basket[num][5]);
+                    price = basket[num][4];
+                    let minImageUrl = basket[num][1].replace(".jpg", "-min.jpg");
+                    minImageUrl = minImageUrl.replace("images", "images/min");
+                    document.getElementById("Basket").innerHTML += `
                     <div class='Basket__container__liste__items row p-1 align-items-center'>\
                         <div class='Basket__container__liste__items__item text-center col-sm'>\
                             <img id='imgBasket' class='p-1' src=${minImageUrl}>\
@@ -104,33 +105,36 @@ export function displayBasket() {
                         </div>\
                     </div><hr>
                     `;
+                }
+                // affiche le total de la commande
+                localStorage.setItem("priceTotal", priceTotal);
+                document.getElementById("total").textContent = "Somme total de la commande: " + parseFloat(priceTotal).toFixed(2) + "€";
             }
-            // affiche le total de la commande
-            localStorage.setItem("priceTotal", priceTotal);
-            document.getElementById("total").textContent = "Somme total de la commande: " + parseFloat(priceTotal).toFixed(2) + "€";
-        }
-        // mise a jour affichage de la qty d'articles dans le panier
-        numBasket();
+            // mise a jour affichage de la qty d'articles dans le panier
+            numBasket();
 
-        //Evénement click sur tous les boutons => remove 
-        let btnRemove = document.getElementsByClassName("btnRemove");
-        for (let i = 0; i < btnRemove.length; i++) {
-            let elt = btnRemove[i];
-            btnRemove[i].addEventListener("click", function(event) { removeItemOnce(i); });
-        }
+            //Evénement click sur tous les boutons => remove 
+            let btnRemove = document.getElementsByClassName("btnRemove");
+            for (let i = 0; i < btnRemove.length; i++) {
+                let elt = btnRemove[i];
+                btnRemove[i].addEventListener("click", function(event) { removeItemOnce(i); });
+            }
 
-        //ecoute btn submit & check saisie formulaire
-        let valid = document.getElementById("validBasket");
-        valid.addEventListener("submit", function(e) {
-            e.preventDefault();
-            checkData();
-            //verification de la saisie formulaire
-            if (CheckForm()) {
-                displayOrder();
-            };
-        });
-    } else {
-        // si pas d'article affiche boite de dialogue (1 bouton)
-        showModal("Information", "Votre panier ne contient aucun article", "Fermer", null, () => location.href = "index.html");
+            //ecoute btn submit & check saisie formulaire
+            let valid = document.getElementById("validBasket");
+            valid.addEventListener("submit", function(e) {
+                e.preventDefault();
+                checkData();
+                //verification de la saisie formulaire
+                if (CheckForm()) {
+                    displayOrder();
+                };
+            });
+        } else {
+            // si pas d'article affiche boite de dialogue (1 bouton)
+            showModal("Information", "Votre panier ne contient aucun article", "Fermer", null, () => location.href = "index.html");
+        }
+    } catch {
+        alert("Une erreur inattendue");
     }
 }

@@ -10,6 +10,7 @@ export function fetchRequest(methode, url, data) {
         })
         .then((response) => response.json())
         .catch(function(error) {
+            alert("Une erreur inattendue");
             console.log(error);
         });
 }
